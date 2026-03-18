@@ -101,13 +101,14 @@ const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }: { product:
           {product.brand} · {product.model}
         </p>
         
-        <div className="flex items-end justify-between mb-6">
-          <div>
+        <div className="flex items-end justify-between gap-3 mb-6">
+          <div className="flex-1 min-w-0">
             <div className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em] mb-1">Export Price</div>
-            <div className="text-primary font-display font-black text-2xl tracking-tighter drop-shadow-sm">{product.price}</div>
+            <div className="text-primary font-display font-black text-2xl tracking-tighter drop-shadow-sm truncate">{product.price}</div>
           </div>
-          <div className="text-[10px] text-heading/40 font-black uppercase tracking-widest bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">
-            Ref: {product.refNumber}
+          <div className="shrink-0 text-[10px] bg-white border border-gray-200 px-3.5 py-2 rounded-xl flex flex-col items-center leading-[1.2] shadow-sm group-hover:border-primary/20 transition-all duration-300">
+            <span className="text-gray-500 font-bold uppercase tracking-widest text-[8px] mb-0.5">Ref:</span>
+            <span className="text-gray-900 font-display font-black tracking-tight">{product.refNumber}</span>
           </div>
         </div>
         

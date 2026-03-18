@@ -172,8 +172,9 @@ const ProductDetail = () => {
                 <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] border border-primary/20">
                   {product.category}
                 </span>
-                <span className="text-heading/30 font-black uppercase tracking-widest text-[10px] flex items-center gap-2">
-                  <Tag size={14} className="opacity-40" /> SG-REF: {product.refNumber}
+                <span className="text-gray-500 font-bold uppercase tracking-[0.15em] text-[10px] flex items-center gap-2 bg-gray-50 border border-gray-100 px-3 py-1.5 rounded-xl shadow-sm">
+                  <Tag size={14} className="text-primary/70" /> 
+                  Ref: <span className="text-gray-900 font-black">{product.refNumber}</span>
                 </span>
               </div>
 
@@ -205,9 +206,9 @@ const ProductDetail = () => {
 
               <div className="grid grid-cols-2 gap-x-12 gap-y-6 mb-12 px-2">
                 {specifications.map((spec, i) => (
-                  <div key={i} className="flex flex-col gap-1 py-1 border-b border-gray-100">
-                    <span className="text-heading/30 text-[9px] font-black uppercase tracking-widest">{spec.label}</span>
-                    <span className="text-heading font-black text-[15px] tracking-tight">{spec.value}</span>
+                  <div key={i} className="flex flex-col gap-1 py-2 border-b border-gray-100/80 group">
+                    <span className="text-gray-400 text-[9px] font-bold uppercase tracking-widest group-hover:text-primary/70 transition-colors">{spec.label}</span>
+                    <span className="text-gray-900 font-black text-[15px] tracking-tight">{spec.value}</span>
                   </div>
                 ))}
               </div>
