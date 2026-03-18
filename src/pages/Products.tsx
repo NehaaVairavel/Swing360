@@ -118,15 +118,17 @@ const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }: { product:
           >
             Details
           </Link>
-          <a
-            href={getWhatsAppUrl(product.name, product.refNumber)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setSelectedProduct(product);
+              setEnquiryOpen(true);
+            }}
             className="flex-1 bg-primary text-white text-[11px] font-black uppercase tracking-widest py-3 rounded-xl shadow-[0_8px_15px_-5px_rgba(245,158,11,0.4)] hover:shadow-glow hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
           >
             <MessageCircle size={14} />
             Enquire
-          </a>
+          </button>
         </div>
       </div>
     </motion.div>

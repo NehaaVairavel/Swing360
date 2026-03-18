@@ -16,7 +16,7 @@ const stats = [
   { value: 10, suffix: "+", label: "Years Operating", icon: Shield },
   { value: 200, suffix: "+", label: "Units Delivered", icon: Truck },
   { value: 120, suffix: "+", label: "Machines Exported", icon: Award },
-  { value: 5, suffix: "", label: "Countries Served", icon: Globe },
+  { value: 6, suffix: "", label: "Countries Served", icon: Globe },
 ];
 
 const categories = [
@@ -35,7 +35,7 @@ const services = [
   { icon: Headphones, title: "After-Sales Support", desc: "Dedicated support to maximize your equipment lifecycle." },
 ];
 
-const markets = ["UAE", "Middle East", "Africa", "Europe", "India", "Mexico"];
+const markets = ["UAE", "Middle East", "Africa", "Europe", "India", "North America"];
 
 /* ── Count-up hook ── */
 const useCountUp = (target: number, duration = 2500) => {

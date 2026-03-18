@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { products, Product } from "@/data/products";
 import { useState, useEffect } from "react";
+import EnquiryModal from "@/components/EnquiryModal";
 import AnimatedGear from "@/components/AnimatedGear";
 import { getWhatsAppUrl } from "@/utils/whatsapp";
 
@@ -22,6 +23,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [activeImage, setActiveImage] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
   
   const product = products.find((p) => p.id === id);
 
@@ -218,15 +220,13 @@ const ProductDetail = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-5">
-                <a
-                  href={getWhatsAppUrl(product.name, product.refNumber)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setEnquiryOpen(true)}
                   className="flex-[1.5] bg-primary text-white py-5 px-8 flex items-center justify-center gap-4 rounded-[1.5rem] font-black uppercase tracking-widest text-[13px] shadow-[0_20px_40px_-10px_rgba(245,158,11,0.5)] hover:shadow-glow hover:scale-[1.02] transition-all group"
                 >
                   <MessageSquare size={22} />
-                  Enquire via WhatsApp
-                </a>
+                  Enquire Now
+                </button>
                 <a
                   href="tel:+918220722221"
                   className="flex-1 bg-white border-2 border-charcoal/5 text-heading py-5 px-8 flex items-center justify-center gap-4 rounded-[1.5rem] font-black uppercase tracking-widest text-[13px] hover:border-primary/30 hover:bg-primary/5 transition-all"
@@ -277,6 +277,7 @@ const ProductDetail = () => {
           ))}
         </div>
       </div>
+      <EnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} productName={product.name} />
     </div>
   );
 };
