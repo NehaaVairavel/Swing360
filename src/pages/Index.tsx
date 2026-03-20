@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, useInView, useScroll } from "framer-motion";
-import { Truck, Wrench, Banknote, Headphones, Globe, ArrowRight, Settings, Shield, Award } from "lucide-react";
+import { Truck, Wrench, Banknote, Headphones, Globe, ArrowRight, Settings, Shield, Award, Search } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import AnimatedGear from "@/components/AnimatedGear";
 import SectionReveal from "@/components/SectionReveal";
@@ -11,6 +11,7 @@ import dozerImg from "@/assets/dozer.jpg";
 import materialHandlerImg from "@/assets/material-handler.jpg";
 import skidSteerImg from "@/assets/skid-steer.jpg";
 import graderImg from "@/assets/grader.jpg";
+import uaeFlag from "@/assets/flags/uae.png";
 
 const stats = [
   { value: 10, suffix: "+", label: "Years Operating", icon: Shield },
@@ -35,7 +36,14 @@ const services = [
   { icon: Headphones, title: "After-Sales Support", desc: "Dedicated support to maximize your equipment lifecycle." },
 ];
 
-const markets = ["UAE", "Middle East", "Africa", "Europe", "India", "North America"];
+const markets = [
+  { name: "UAE", code: "ae" },
+  { name: "Middle East", code: "sa" },
+  { name: "Africa", code: "za" },
+  { name: "Europe", code: "eu" },
+  { name: "India", code: "in" },
+  { name: "North America", code: "us" },
+];
 
 /* ── Count-up hook ── */
 const useCountUp = (target: number, duration = 2500) => {
@@ -104,6 +112,16 @@ const staggerItem = {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   
@@ -138,18 +156,34 @@ const Index = () => {
         </motion.div>
 
         {/* Abstract depth shapes with parallax */}
-        <motion.div style={{ y: shapeY1, x: useTransform(mouseX, [-0.5, 0.5], [-50, 50]) }} className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-primary/[0.08] blur-[100px] z-0" />
-        <motion.div style={{ y: shapeY2, x: useTransform(mouseX, [-0.5, 0.5], [50, -50]) }} className="absolute bottom-[-5%] left-[5%] w-[500px] h-[500px] rounded-full bg-accent/[0.06] blur-[120px] z-0" />
-        
-        {/* Decorative gears */}
-        <motion.div style={{ y: gearY, rotate: gearRotation }} className="absolute bottom-12 right-[12%] opacity-[0.08] hidden lg:block z-0">
-          <AnimatedGear size={320} className="drop-shadow-xl" />
-        </motion.div>
-        <motion.div style={{ y: shapeY1, rotate: useTransform(mouseY, [-0.5, 0.5], [45, -45]) }} className="absolute top-[20%] right-[2%] opacity-[0.05] hidden lg:block z-0">
-          <AnimatedGear size={180} className="[animation-duration:reverse] drop-shadow-xl" />
-        </motion.div>
 
-        <div className="container-section relative z-10 pt-32 pb-24 md:pt-40 md:pb-32">
+        <div className="container-section relative z-10 pt-[88px] pb-12 md:pt-[104px] md:pb-16">
+          {/* Static Search Bar - Anchored to Hero Section */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="hidden lg:block absolute top-[96px] right-8 z-30 w-[420px]"
+          >
+            <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-md rounded-full p-1.5 shadow-premium flex items-center gap-2 border border-white/60 focus-within:ring-2 focus-within:ring-primary/30 transition-all duration-300">
+              <div className="flex-1 flex items-center gap-4 px-6">
+                <Search size={20} className="text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search Excavators, Loaders, CAT 320..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-transparent border-none outline-none text-sm text-heading placeholder:text-muted-foreground w-full font-semibold"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-primary text-white px-8 py-3.5 rounded-full hover:bg-primary-dark transition-all shadow-xl shadow-primary/25 font-black uppercase tracking-widest text-[13px]"
+              >
+                Search
+              </button>
+            </form>
+          </motion.div>
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             
             {/* Left Content */}
@@ -158,7 +192,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md border border-primary/20 text-heading px-5 py-2 rounded-full text-[10px] font-display font-black uppercase tracking-[0.2em] mb-10 shadow-[0_10px_30px_-10px_rgba(245,158,11,0.2)]"
+                 className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md border border-primary/20 text-heading px-5 py-2 rounded-full text-[10px] font-display font-black uppercase tracking-[0.2em] mb-6 shadow-[0_10px_30px_-10px_rgba(245,158,11,0.2)]"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -189,7 +223,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.55 }}
-                className="text-lg md:text-xl mb-12 text-heading/65 leading-relaxed font-medium"
+                className="text-lg md:text-xl mb-8 text-heading/65 leading-relaxed font-medium"
               >
                 Reliable Machinery • Transparent Trade • Worldwide Logistics
               </motion.p>
@@ -202,19 +236,32 @@ const Index = () => {
               >
                 <Link
                   to="/products"
-                  className="group btn-cta px-10 py-5 rounded-2xl font-display font-black flex items-center gap-2 text-base shadow-glow shadow-primary/20"
+                  className="group btn-cta px-12 py-5 rounded-2xl font-display font-black flex items-center gap-2 text-base shadow-glow shadow-primary/20"
                 >
                   <span className="relative z-10 flex items-center gap-2.5">
                     Explore Products
                     <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-300" />
                   </span>
                 </Link>
-                <Link
-                  to="/contact"
-                  className="btn-secondary-glass px-10 py-5 rounded-2xl flex items-center justify-center border-charcoal/30 hover:border-primary"
-                >
-                  Get Quote
-                </Link>
+
+                {/* Mobile Search Bar - Stacks below button */}
+                <div className="lg:hidden w-full mt-6">
+                  <form onSubmit={handleSearch} className="bg-white/95 backdrop-blur-md rounded-full p-1 shadow-premium flex items-center gap-2 border border-border/40 focus-within:ring-2 focus-within:ring-primary/30 transition-all duration-300">
+                    <div className="flex-1 flex items-center gap-2.5 px-4">
+                      <Search size={16} className="text-muted-foreground" />
+                      <input
+                        type="search"
+                        placeholder="Search Excavators, Loaders, CAT 320..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="bg-transparent border-none outline-none text-[13px] text-heading placeholder:text-muted-foreground w-full font-medium py-2.5"
+                      />
+                    </div>
+                    <button type="submit" className="bg-primary text-white px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all">
+                      Search
+                    </button>
+                  </form>
+                </div>
               </motion.div>
             </div>
 
@@ -224,7 +271,7 @@ const Index = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 50 }}
               style={{ x: heroImageX, y: heroImageY }}
-              className="hidden lg:block relative"
+              className="hidden lg:block relative lg:pt-32"
             >
               <div className="relative animate-float-hero hero-image-wrapper">
                 {/* Image core */}
@@ -264,13 +311,13 @@ const Index = () => {
       </section>
 
       {/* ── Stats ── */}
-      <section className="section-warm industrial-dots py-24 md:py-32 section-divider-top overflow-hidden">
+      <section className="section-warm industrial-dots py-12 md:py-16 section-divider-top overflow-hidden">
         <div className="container-section relative z-10">
-          <SectionReveal className="text-center mb-16">
+          <SectionReveal className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-display font-extrabold text-heading mb-4 heading-decorated tracking-tight">
               Our Global <span className="text-gradient drop-shadow-sm">Presence</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-6">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-2">
               Delivering excellence in heavy equipment trading across global markets
             </p>
           </SectionReveal>
@@ -284,15 +331,15 @@ const Index = () => {
       </section>
 
       {/* ── Categories ── */}
-      <section className="section-tinted py-24 md:py-32 section-divider-top relative">
+      <section className="section-tinted py-12 md:py-16 section-divider-top relative">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.04] rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/3"></div>
         
         <div className="container-section relative z-10">
-          <SectionReveal className="text-center mb-16">
+          <SectionReveal className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-display font-extrabold text-heading mb-4 heading-decorated tracking-tight">
               Premium <span className="text-gradient drop-shadow-sm">Products</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-6">Explore our diverse range of high-quality heavy equipment ready for global export</p>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-2">Explore our diverse range of high-quality heavy equipment ready for global export</p>
           </SectionReveal>
           
           <motion.div
@@ -330,7 +377,7 @@ const Index = () => {
             ))}
           </motion.div>
           
-          <div className="mt-16 text-center">
+          <div className="mt-12 text-center">
             <Link to="/products" className="btn-secondary-glass inline-flex items-center gap-2">
               Browse All Equipment <ArrowRight size={18} />
             </Link>
@@ -339,16 +386,16 @@ const Index = () => {
       </section>
 
       {/* ── Services ── */}
-      <section className="section-soft py-24 md:py-32 section-divider-top relative">
+      <section className="section-soft py-12 md:py-16 section-divider-top relative">
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[100px] -z-10 -translate-x-1/3 translate-y-1/3"></div>
         <div className="absolute inset-0 industrial-pattern opacity-50 z-0"></div>
 
         <div className="container-section relative z-10">
-          <SectionReveal className="text-center mb-16">
+          <SectionReveal className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-display font-extrabold text-heading mb-4 heading-decorated tracking-tight">
               Global <span className="text-gradient drop-shadow-sm">Solutions</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-6">Comprehensive end-to-end solutions for international heavy equipment trading</p>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-2">Comprehensive end-to-end solutions for international heavy equipment trading</p>
           </SectionReveal>
           
           <motion.div
@@ -377,7 +424,7 @@ const Index = () => {
       </section>
 
       {/* ── Markets ── */}
-      <section className="section-base py-24 md:py-32 section-divider-top relative overflow-hidden">
+      <section className="section-base py-12 md:py-16 section-divider-top relative overflow-hidden">
         <motion.div style={{ y: shapeY1 }} className="absolute top-[20%] right-[10%] opacity-[0.03] text-primary">
           <Globe size={400} />
         </motion.div>
@@ -388,7 +435,7 @@ const Index = () => {
               <Globe className="text-primary drop-shadow-[0_0_12px_rgba(245,158,11,0.4)]" size={42} />
               Markets We <span className="text-gradient drop-shadow-sm">Serve</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-16 mt-6">
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-10 mt-2">
               Strategic location in Dubai enabling seamless delivery to global markets
             </p>
           </SectionReveal>
@@ -398,20 +445,29 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="flex flex-wrap justify-center gap-4 md:gap-6"
+            className="grid grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6 max-w-6xl mx-auto"
           >
             {markets.map((m) => (
               <motion.div
-                key={m}
+                key={m.name}
                 variants={staggerItem}
-                whileHover={{
-                  y: -6,
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(245,158,11,0.2), 0 0 20px rgba(245,158,11,0.1)",
-                }}
-                className="card-premium px-10 py-5 rounded-2xl font-display font-extrabold text-[15px] text-heading cursor-default tracking-wide bg-white/80 backdrop-blur-sm"
+                whileHover={{ y: -6 }}
+                className="group bg-white/90 backdrop-blur-md border border-border/50 rounded-2xl p-5 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:shadow-premium hover:border-primary/50 shadow-sm relative overflow-hidden cursor-default"
               >
-                {m}
+                {/* Subtle background glow on hover */}
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md transition-transform duration-500 group-hover:scale-110 relative z-10 bg-white">
+                  <img 
+                    src={m.name === "UAE" ? uaeFlag : `https://flagcdn.com/w80/${m.code}.png`} 
+                    alt={m.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://flagcdn.com/w80/un.png";
+                    }}
+                  />
+                </div>
+                <span className="font-display font-bold text-heading text-[15px] tracking-tight relative z-10">{m.name}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -419,7 +475,7 @@ const Index = () => {
       </section>
 
       {/* ── CTA ── */}
-      <section className="gradient-cta py-24 md:py-32 relative overflow-hidden">
+      <section className="gradient-cta py-12 md:py-16 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0">
           <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white/[0.12] blur-[100px]" />
@@ -440,7 +496,7 @@ const Index = () => {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 drop-shadow-lg tracking-tight">
               Ready to Upgrade Your Fleet?
             </h2>
-            <p className="text-white/90 mb-12 max-w-2xl mx-auto text-lg md:text-xl font-medium drop-shadow-md">
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto text-lg md:text-xl font-medium drop-shadow-md">
               Get competitive pricing, global shipping logistics, and expert consultation from our Dubai headquarters.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">

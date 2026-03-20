@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, Mail, X, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { products, categories, Product } from "@/data/products";
@@ -137,10 +137,18 @@ const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }: { product:
 };
 
 const Products = () => {
+  const [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+
+  useEffect(() => {
+    const search = searchParams.get("search");
+    if (search !== null) {
+      setSearchQuery(search);
+    }
+  }, [searchParams]);
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = activeCategory === "All" || product.category === activeCategory;
@@ -149,7 +157,7 @@ const Products = () => {
   });
 
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-[#fcfcfc] section-base relative overflow-hidden">
+    <div className="pt-[130px] pb-12 min-h-screen bg-[#fcfcfc] section-base relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-primary/[0.05] blur-[120px] pointer-events-none" />
       <div className="absolute left-[5%] top-[20%] opacity-[0.03] pointer-events-none hidden lg:block">
@@ -162,7 +170,7 @@ const Products = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-8"
         >
           <div className="inline-block px-4 py-1.5 bg-primary/10 rounded-full text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-primary/20">
             Export Hub Catalog
@@ -180,7 +188,7 @@ const Products = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.08)] p-2 md:p-2.5 mb-16 flex flex-col lg:flex-row gap-4 items-center justify-between sticky top-24 z-30"
+          className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.08)] p-2 md:p-2.5 mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between sticky top-24 z-30"
         >
           {/* Categories - Sleek Animated Tabs */}
           <div className="flex overflow-x-auto w-full lg:w-auto pb-0.5 lg:pb-0 gap-1.5 hide-scrollbar px-1 scroll-smooth">

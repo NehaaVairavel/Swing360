@@ -7,8 +7,9 @@ import logo from "@/assets/logo.png";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Products", path: "/products" },
+  { label: "Parts", path: "/parts" },
   { label: "Gallery", path: "/gallery" },
-  { label: "Contact", path: "/contact" },
+  { label: "Contact Us", path: "/contact-us" },
 ];
 
 const Navbar = () => {
@@ -32,40 +33,42 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-navbar navbar-floating" : "glass-navbar-initial border-b border-border/20"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
+        scrolled 
+          ? "bg-white/90 backdrop-blur-xl border-primary/10 shadow-lg" 
+          : "bg-white/80 backdrop-blur-md border-border/20 shadow-sm"
       }`}
     >
-      <div className={`container-section flex items-center justify-between transition-all duration-500 ${scrolled ? "h-20" : "h-24"}`}>
+      <div className="container-section flex items-center justify-between h-20 transition-all duration-500">
         {/* ── Logo + Brand Name ── */}
-        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-3.5 group">
+        <Link to="/" onClick={handleHomeClick} className="flex items-center gap-5 group">
           <img
             src={logo}
             alt="Swing360 EXIM"
-            className={`w-auto drop-shadow-lg group-hover:scale-105 transition-all duration-500 ${scrolled ? "h-14" : "h-16"}`}
+            className="h-14 w-auto drop-shadow-xl group-hover:scale-105 transition-all duration-500"
           />
           <div className="hidden sm:flex flex-col leading-tight pt-1">
-            <span className={`font-display font-extrabold text-heading tracking-tight transition-all duration-500 ${scrolled ? "text-xl" : "text-2xl"}`}>
+            <span className="font-display font-black text-heading text-xl tracking-tight transition-all duration-500">
               Swing<span className="text-primary drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]">360</span>
             </span>
-            <span className="font-display font-bold text-[11px] md:text-xs text-primary/80 uppercase tracking-[0.2em] mt-0.5">
-              EXIM Trading
+            <span className="font-display font-black text-[13px] md:text-[14px] text-primary uppercase tracking-[0.38em] mt-1.5 transition-all duration-300 opacity-100 drop-shadow-[0_0_10px_rgba(245,158,11,0.3)]">
+              EXIM TRADING
             </span>
           </div>
         </Link>
 
         {/* ── Desktop Nav ── */}
-        <div className="hidden md:flex items-center gap-10">
-          <div className="flex gap-8">
+        <div className="hidden md:flex items-center gap-2">
+          <div className="flex gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={link.path === "/" ? handleHomeClick : undefined}
-                className={`nav-link-hover relative font-display text-[15px] font-bold transition-colors duration-400 py-2 ${
+                className={`nav-link-hover relative font-display text-[15px] font-bold transition-all duration-400 py-2 ${
                   location.pathname === link.path
                     ? "text-primary text-shadow-sm"
-                    : "text-heading/70 hover:text-heading"
+                    : "text-heading/80 hover:text-primary transition-colors"
                 }`}
               >
                 {link.label}
@@ -83,15 +86,6 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          
-          <div className="w-px h-8 bg-border/60 mx-1"></div>
-
-          <Link
-            to="/contact"
-            className="btn-cta text-sm py-3 px-8 shadow-glow"
-          >
-            <span className="relative z-10 font-display font-bold tracking-wide">Get Quote</span>
-          </Link>
         </div>
 
         {/* ── Mobile toggle ── */}
@@ -113,11 +107,11 @@ const Navbar = () => {
             transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
             className="md:hidden overflow-hidden border-t border-border/30"
             style={{
-              background: "rgba(255,255,255,0.92)",
+              background: "rgba(255,255,255,0.95)",
               backdropFilter: "blur(24px)",
             }}
           >
-            <div className="container-section py-6 flex flex-col gap-3">
+            <div className="container-section py-8 flex flex-col gap-3">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.path}
@@ -128,29 +122,16 @@ const Navbar = () => {
                   <Link
                     to={link.path}
                     onClick={link.path === "/" ? handleHomeClick : undefined}
-                    className={`font-display text-base font-bold py-3.5 px-5 rounded-xl transition-all duration-300 block ${
+                    className={`font-display text-lg font-bold py-3.5 px-6 rounded-xl transition-all duration-300 block ${
                       location.pathname === link.path
                         ? "text-primary bg-primary/10 shadow-[inner_0_0_0_1px_rgba(245,158,11,0.2)]"
-                        : "text-heading hover:bg-muted/50"
+                        : "text-heading hover:bg-muted/50 hover:text-primary"
                     }`}
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-                className="mt-2"
-              >
-                <Link
-                  to="/contact"
-                  className="btn-cta text-sm text-center block py-4"
-                >
-                  <span className="relative z-10 font-display font-bold tracking-wide">Get Quote</span>
-                </Link>
-              </motion.div>
             </div>
           </motion.div>
         )}

@@ -49,7 +49,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 min-h-screen bg-white relative overflow-hidden">
+    <div className="pt-28 pb-10 min-h-screen bg-white relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-[10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-primary/[0.02] blur-[120px] pointer-events-none" />
@@ -62,7 +62,7 @@ const Gallery = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-display font-extrabold text-heading mb-4">Our <span className="text-gradient">Gallery</span></h1>
           <p className="text-muted-foreground text-lg">Visual highlights of our machinery, global shipments, and facilities.</p>
@@ -73,7 +73,7 @@ const Gallery = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex justify-center flex-wrap gap-2 md:gap-4 mb-16"
+          className="flex justify-center flex-wrap gap-2 md:gap-4 mb-8"
         >
           {categories.map((category) => (
             <button

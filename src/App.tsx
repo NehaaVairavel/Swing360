@@ -9,6 +9,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Index from "./pages/Index.tsx";
 import Products from "./pages/Products.tsx";
 import Gallery from "./pages/Gallery.tsx";
+import Parts from "./pages/Parts.tsx";
 import Contact from "./pages/Contact.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -29,8 +30,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/parts" element={<Parts />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact-us" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

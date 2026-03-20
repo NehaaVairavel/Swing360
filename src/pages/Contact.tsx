@@ -31,7 +31,7 @@ const Contact = () => {
     "w-full bg-white/70 backdrop-blur-sm border border-border/50 shadow-sm rounded-xl px-4 py-3.5 text-sm text-heading placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 hover:border-primary/30 transition-all duration-300";
 
   return (
-    <div className="min-h-screen pt-28 pb-20 relative overflow-hidden bg-white">
+    <div className="min-h-screen pt-28 pb-10 relative overflow-hidden bg-white">
       {/* Deep decorative background */}
       <div className="absolute top-[5%] right-[-5%] w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[20%] left-[-5%] w-[500px] h-[500px] rounded-full bg-accent/[0.03] blur-[120px] pointer-events-none" />
@@ -44,7 +44,7 @@ const Contact = () => {
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-display font-extrabold text-heading mb-4 tracking-tight">
             Get in <span className="text-gradient">Touch</span>
