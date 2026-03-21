@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, MessageCircle, Mail, X, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { Phone, MessageCircle, Mail, X, ChevronLeft, ChevronRight, Search, ArrowRight } from "lucide-react";
 import { products, categories } from "@/data/products";
 import EnquiryModal from "@/components/EnquiryModal";
 import AnimatedGear from "@/components/AnimatedGear";
 import { getWhatsAppUrl } from "@/utils/whatsapp";
+import { useCurrency } from "@/context/CurrencyContext";
+import CurrencyToggle from "@/components/CurrencyToggle";
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -18,6 +20,7 @@ const itemVariant = {
 };
 
 const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }) => {
+  const { formatPrice } = useCurrency();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = (e) => {
@@ -93,41 +96,53 @@ const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }) => {
         </div>
       </div>
       
-      <div className="p-7">
-        <h3 className="font-display font-black text-heading text-xl mb-1 tracking-tight group-hover:text-primary transition-colors duration-300 line-clamp-2 min-h-[56px]">
+      <div className="p-5">
+        {/* Title */}
+        <h3 className="font-display font-black text-heading text-[1.1rem] md:text-xl mb-4 tracking-tight group-hover:text-primary transition-colors duration-300 line-clamp-2 md:min-h-[56px] min-h-[48px] leading-tight">
           {product.name}
         </h3>
-        <p className="text-[13px] text-muted-foreground mb-6 font-bold uppercase tracking-wider opacity-60 line-clamp-1 min-h-[19.5px]">
-          {product.brand} · {product.model}
-        </p>
         
-        <div className="flex items-end justify-between gap-3 mb-6">
+        {/* Price & Ref Section - Tighter, balanced flex row */}
+        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-3 mb-5">
           <div className="flex-1 min-w-0">
-            <div className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em] mb-1">Export Price</div>
-            <div className="text-primary font-display font-black text-2xl tracking-tighter drop-shadow-sm truncate">{product.price}</div>
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-[10px] text-gray-900 font-black uppercase tracking-[0.2em]">Export Price</div>
+              <CurrencyToggle variant="compact" />
+            </div>
+            <div className="text-primary font-display font-black text-[1.35rem] tracking-tight drop-shadow-sm whitespace-nowrap leading-none">
+              {formatPrice(product.priceUSD)}
+            </div>
           </div>
-          <div className="shrink-0 text-[10px] bg-white border border-gray-200 px-3.5 py-2 rounded-xl flex flex-col items-center leading-[1.2] shadow-sm group-hover:border-primary/20 transition-all duration-300">
-            <span className="text-gray-500 font-bold uppercase tracking-widest text-[8px] mb-0.5">Ref:</span>
-            <span className="text-gray-900 font-display font-black tracking-tight">{product.refNumber}</span>
+          
+          {/* Ref Badge - Proper tag style with strong visibility */}
+          <div className="shrink-0 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 shadow-sm group-hover:border-primary/40 transition-all duration-300 relative overflow-hidden flex flex-col items-center min-w-[68px]">
+            <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span className="text-white/60 font-semibold uppercase tracking-widest text-[9px] mb-0.5 relative z-10 leading-none">Ref No.</span>
+            <span className="text-white font-black text-[12px] tracking-tight relative z-10 leading-none">{product.refNumber}</span>
           </div>
         </div>
         
-        <div className="flex gap-3">
+        {/* Actions Section */}
+        <div className="flex gap-2.5">
+          {/* Details Button - Option A (Premium Secondary w/ Icon) */}
           <Link
             to={`/products/${product.id}`}
-            className="flex-1 bg-white border border-charcoal/5 text-heading text-[11px] font-black uppercase tracking-widest py-3 rounded-xl hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all duration-300 text-center"
+            className="flex-1 bg-white border border-gray-200 text-gray-800 text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] py-3 rounded-xl hover:border-primary/40 hover:bg-orange-50/50 hover:text-primary hover:shadow-[0_4px_15px_-4px_rgba(245,158,11,0.15)] transition-all duration-300 text-center flex items-center justify-center gap-1.5 group/btn"
           >
             Details
+            <ArrowRight size={13} className="text-gray-400 group-hover/btn:text-primary group-hover/btn:translate-x-1 transition-all duration-300" />
           </Link>
+          
+          {/* Enquire Button - Keep primary, strong lift and glow */}
           <button
             onClick={(e) => {
               e.preventDefault();
               setSelectedProduct(product);
               setEnquiryOpen(true);
             }}
-            className="flex-1 bg-primary text-white text-[11px] font-black uppercase tracking-widest py-3 rounded-xl shadow-[0_8px_15px_-5px_rgba(245,158,11,0.4)] hover:shadow-glow hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+            className="flex-1 bg-primary text-white text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] py-3 rounded-xl shadow-[0_8px_20px_-5px_rgba(245,158,11,0.45)] hover:shadow-[0_15px_25px_-5px_rgba(245,158,11,0.65)] hover:-translate-y-[2px] hover:scale-[1.01] transition-all duration-300 flex items-center justify-center gap-1.5 border border-primary/20"
           >
-            <MessageCircle size={14} />
+            <MessageCircle size={14} className="opacity-90" />
             Enquire
           </button>
         </div>
@@ -138,15 +153,19 @@ const ProductCard = ({ product, setSelectedProduct, setEnquiryOpen }) => {
 
 const Products = () => {
   const [searchParams] = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState(searchParams.get("category") || "All");
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
 
   useEffect(() => {
     const search = searchParams.get("search");
+    const category = searchParams.get("category");
     if (search !== null) {
       setSearchQuery(search);
+    }
+    if (category !== null) {
+      setActiveCategory(category);
     }
   }, [searchParams]);
 
@@ -183,51 +202,41 @@ const Products = () => {
           </p>
         </motion.div>
 
-        {/* Filter and Search Bar - Premium Redesign */}
+        {/* Filter and Search Bar - Clean Open Layout */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white/50 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.08)] p-2 md:p-2.5 mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between sticky top-24 z-30"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-10 flex flex-col md:flex-row md:items-start gap-4 sticky top-24 z-30 bg-[#fcfcfc]/95 backdrop-blur-md py-4 border-b border-gray-100"
         >
-          {/* Categories - Sleek Animated Tabs */}
-          <div className="flex overflow-x-auto w-full lg:w-auto pb-0.5 lg:pb-0 gap-1.5 hide-scrollbar px-1 scroll-smooth">
+          {/* Category Chips - Wrap naturally, left-aligned */}
+          <div className="flex flex-wrap items-center gap-2 flex-1">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => { setActiveCategory(category); }}
-                className={`flex-shrink-0 px-6 py-3 rounded-[1.25rem] text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-500 relative group ${
+                className={`px-4 py-2 rounded-lg text-[11px] font-bold uppercase tracking-[0.12em] transition-all duration-200 border ${
                   activeCategory === category
-                    ? "text-white"
-                    : "text-heading/40 hover:text-heading/70"
+                    ? "bg-primary border-primary text-white shadow-[0_4px_14px_-4px_rgba(245,158,11,0.55)]"
+                    : "bg-transparent border-gray-200 text-gray-500 hover:bg-orange-50 hover:border-orange-200 hover:text-primary"
                 }`}
               >
-                {activeCategory === category && (
-                  <motion.div 
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 shadow-[0_8px_20px_-6px_rgba(245,158,11,0.6)] z-0 rounded-[1.25rem]"
-                    transition={{ type: "spring", bounce: 0.25, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">{category}</span>
-                {activeCategory !== category && (
-                   <span className="absolute bottom-2 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary/20 rounded-full transition-all duration-300 group-hover:w-1/2" />
-                )}
+                {category}
               </button>
             ))}
           </div>
 
-          {/* Search Box - Integrated & Minimal */}
-          <div className="relative w-full lg:w-[320px] px-1 group">
-            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-heading/20 group-focus-within:text-primary transition-colors duration-300">
-              <Search size={16} />
+          {/* Search Bar - Inline right on desktop, full width on mobile */}
+          <div className="relative w-full md:w-[280px] shrink-0 group">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors duration-200">
+              <Search size={15} />
             </div>
             <input
               type="text"
               placeholder="Search catalog..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-6 py-3.5 bg-gray-50/40 border border-gray-100/50 rounded-2xl text-[13px] font-bold focus:outline-none focus:ring-4 focus:ring-primary/5 focus:bg-white focus:border-primary/20 transition-all font-body text-heading placeholder:text-heading/20 shadow-inner"
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[13px] font-medium focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/40 transition-all text-heading placeholder:text-gray-400 shadow-sm"
             />
           </div>
         </motion.div>
@@ -253,7 +262,7 @@ const Products = () => {
         </motion.div>
       </div>
 
-      <EnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} productName={selectedProduct?.name} />
+      <EnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} productName={selectedProduct?.name} product={selectedProduct} />
     </div>
   );
 };

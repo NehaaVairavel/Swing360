@@ -5,19 +5,20 @@ import AnimatedGear from "@/components/AnimatedGear";
 
 
 
-const categories = ["All", "Facilities", "Deliveries", "Workshops"];
+const categories = ["All", "Shipping", "Logistics", "Workshop", "Others"];
 
 // High-quality mock media for the gallery
 // High-quality mock media for the gallery
 const mockMedia = [
-  { id: "1", url: "https://images.unsplash.com/photo-1541888081696-277d33b8a3e4?q=80&w=1200&auto=format&fit=crop", title: "Excavator Fleet Operations", category: "Facilities" },
-  { id: "2", url: "https://images.unsplash.com/photo-1581451152062-8e0f607dd3b3?q=80&w=1200&auto=format&fit=crop", title: "Heavy Dozer Global Transit", category: "Deliveries" },
-  { id: "3", url: "https://images.unsplash.com/photo-1579412691522-83204d1f2b6a?q=80&w=1200&auto=format&fit=crop", title: "Hydraulic System Inspection", category: "Workshops" },
-  { id: "4", url: "https://images.unsplash.com/photo-1498084393753-b411b2d26f58?q=80&w=1200&auto=format&fit=crop", title: "Backhoe Loading Precision", category: "Facilities" },
-  { id: "5", url: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f0?q=80&w=1200&auto=format&fit=crop", title: "Shipping Logistics Hub", category: "Deliveries" },
-  { id: "6", url: "https://plus.unsplash.com/premium_photo-1664303498877-ad5f5eeab2b7?q=80&w=1200&auto=format&fit=crop", title: "Skid Steer Premium Lineup", category: "Facilities" },
-  { id: "7", url: "https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=1200&auto=format&fit=crop", title: "Crawler Crane Assembly", category: "Workshops" },
-  { id: "8", url: "https://images.unsplash.com/photo-1578330132822-0193077af3f0?q=80&w=1200&auto=format&fit=crop", title: "Global Machinery Export", category: "Deliveries" },
+  { id: "1", url: "https://images.unsplash.com/photo-1541888081696-277d33b8a3e4?q=80&w=1200&auto=format&fit=crop", title: "Excavator Fleet Operations", category: "Logistics" },
+  { id: "2", url: "https://images.unsplash.com/photo-1581451152062-8e0f607dd3b3?q=80&w=1200&auto=format&fit=crop", title: "Heavy Dozer Global Transit", category: "Shipping" },
+  { id: "3", url: "https://images.unsplash.com/photo-1579412691522-83204d1f2b6a?q=80&w=1200&auto=format&fit=crop", title: "Hydraulic System Inspection", category: "Workshop" },
+  { id: "4", url: "https://images.unsplash.com/photo-1498084393753-b411b2d26f58?q=80&w=1200&auto=format&fit=crop", title: "Backhoe Loading Precision", category: "Logistics" },
+  { id: "5", url: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f0?q=80&w=1200&auto=format&fit=crop", title: "Shipping Logistics Hub", category: "Shipping" },
+  { id: "6", url: "https://plus.unsplash.com/premium_photo-1664303498877-ad5f5eeab2b7?q=80&w=1200&auto=format&fit=crop", title: "Skid Steer Premium Lineup", category: "Logistics" },
+  { id: "7", url: "https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=1200&auto=format&fit=crop", title: "Crawler Crane Assembly", category: "Workshop" },
+  { id: "8", url: "https://images.unsplash.com/photo-1578330132822-0193077af3f0?q=80&w=1200&auto=format&fit=crop", title: "Global Machinery Export", category: "Shipping" },
+  { id: "9", url: "https://images.unsplash.com/photo-1581783898377-1c85bf937427?q=80&w=1200&auto=format&fit=crop", title: "Site Assessment", category: "Others" },
 ];
 
 const staggerContainer = {
@@ -70,25 +71,27 @@ const Gallery = () => {
           <p className="text-muted-foreground text-lg">Visual highlights of our machinery, global shipments, and facilities.</p>
         </motion.div>
 
-        {/* Category Filter */}
+        {/* Category Filter System */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex justify-center flex-wrap gap-2 md:gap-4 mb-8"
+          className="flex justify-start md:justify-center items-center gap-3 md:gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide snap-x"
         >
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => { setActiveCategory(category); setLightboxIndex(null); }}
-              className={`px-6 py-2.5 rounded-full text-sm font-display font-bold uppercase tracking-wider transition-all ${
+              className={`px-7 py-3 rounded-full text-[13px] font-display font-black uppercase tracking-[0.15em] transition-all duration-300 whitespace-nowrap snap-center ${
                 activeCategory === category
-                  ? "bg-primary text-white shadow-glow shadow-primary/20 scale-105"
-                  : "bg-gray-100/80 text-heading/70 hover:bg-gray-200"
+                  ? "bg-gradient-to-r from-primary to-orange-600 text-white shadow-[0_10px_20px_-5px_rgba(245,158,11,0.4)] ring-2 ring-primary/20"
+                  : "bg-gray-100/80 text-heading/60 hover:bg-white hover:text-primary hover:shadow-lg border border-transparent hover:border-primary/20"
               }`}
             >
               {category}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
 

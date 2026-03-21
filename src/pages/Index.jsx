@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import AnimatedGear from "@/components/AnimatedGear";
 import SectionReveal from "@/components/SectionReveal";
 import BrandCarousel from "@/components/BrandCarousel";
+import { products } from "@/data/products";
 import heroBg from "@/assets/hero-bg.jpg";
 import excavatorImg from "@/assets/excavator.jpg";
 import backhoeImg from "@/assets/backhoe.jpg";
@@ -25,9 +26,13 @@ const categories = [
   { name: "Excavators", image: excavatorImg },
   { name: "Backhoe Loaders", image: backhoeImg },
   { name: "Dozers", image: dozerImg },
-  { name: "Material Handlers", image: materialHandlerImg },
-  { name: "Skid Steers", image: skidSteerImg },
+  { name: "Wheel Loaders", image: materialHandlerImg },
   { name: "Graders", image: graderImg },
+  { name: "Rollers", image: dozerImg },
+  { name: "Skid Steer", image: skidSteerImg },
+  { name: "Buckets", image: excavatorImg },
+  { name: "Material Handlers", image: materialHandlerImg },
+  { name: "Others", image: skidSteerImg },
 ];
 
 const services = [
@@ -369,39 +374,51 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
           >
-            {categories.map((cat) => (
-              <motion.div key={cat.name} variants={staggerItem}>
-                <Link
-                  to="/products"
-                  className="group relative overflow-hidden rounded-[1.5rem] aspect-[4/3] block card-premium shadow-premium"
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    className="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:from-black/90" />
-                  
-                  <div className="absolute inset-0 flex flex-col justify-end p-8">
-                    <h3 className="font-display font-bold text-2xl text-white drop-shadow-md transform transition-transform duration-500 group-hover:translate-y-[-4px]">{cat.name}</h3>
-                    <div className="flex items-center gap-3 mt-3 overflow-hidden">
-                      <div className="h-[2px] w-0 bg-primary group-hover:w-12 transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
-                      <span className="text-white/0 group-hover:text-white/90 text-sm font-bold uppercase tracking-wider transition-all duration-500 translate-x-[-15px] group-hover:translate-x-0">
-                        View Details
-                      </span>
+            {categories.map((cat) => {
+              const count = products.filter(p => p.category === cat.name).length;
+              
+              return (
+                <motion.div key={cat.name} variants={staggerItem}>
+                  <Link
+                    to={`/products?category=${encodeURIComponent(cat.name)}`}
+                    className="group relative overflow-hidden rounded-[1.5rem] aspect-[4/3] block card-premium shadow-premium"
+                  >
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      className="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    
+                    {/* Count Badge */}
+                    <div className="absolute top-4 right-4 z-20">
+                      <div className="bg-primary/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-[12px] font-black shadow-lg shadow-primary/30 flex items-center justify-center min-w-[32px]">
+                        {count}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:from-black/90" />
+                    
+                    <div className="absolute inset-0 flex flex-col justify-end p-6">
+                      <h3 className="font-display font-bold text-xl text-white drop-shadow-md transform transition-transform duration-500 group-hover:translate-y-[-4px]">{cat.name}</h3>
+                      <div className="flex items-center gap-2 mt-2 overflow-hidden">
+                        <div className="h-[2px] w-0 bg-primary group-hover:w-8 transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+                        <span className="text-white/0 group-hover:text-white/90 text-[10px] font-black uppercase tracking-wider transition-all duration-500 translate-x-[-15px] group-hover:translate-x-0">
+                          View Products
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </motion.div>
           
           <div className="mt-12 text-center">
             <Link to="/products" className="btn-secondary-glass inline-flex items-center gap-2">
-              Browse All Equipment <ArrowRight size={18} />
+              Browse All Products <ArrowRight size={18} />
             </Link>
           </div>
         </div>

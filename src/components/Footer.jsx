@@ -120,7 +120,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col pt-0.5">
                   <span className="text-[10px] font-semibold text-[#EAEAEA]/60 uppercase tracking-[0.15em] mb-1">Our Location</span>
-                  <span className="text-[#EAEAEA] text-[14px] font-medium antialiased group-hover:text-primary transition-colors duration-300">
+                  <span className="text-white text-[14px] font-medium antialiased group-hover:text-primary transition-colors duration-300">
                     Silicon Oasis, Dubai, UAE
                   </span>
                 </div>
@@ -133,10 +133,10 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col pt-0.5 gap-1.5">
                   <span className="text-[10px] font-semibold text-[#EAEAEA]/60 uppercase tracking-[0.15em]">Call Now</span>
-                  <a href="tel:+971558599045" className="text-[#EAEAEA] text-[15px] font-semibold tracking-wide hover:text-primary transition-colors antialiased">
+                  <a href="tel:+971558599045" className="text-[#EAEAEA] text-[15px] font-black tracking-wide hover:text-primary transition-colors antialiased">
                     +971 55 859 9045
                   </a>
-                  <a href="tel:+918778868739" className="text-[#EAEAEA]/90 text-[14px] font-medium tracking-wide hover:text-primary transition-colors antialiased">
+                  <a href="tel:+918778868739" className="text-[#EAEAEA] text-[15px] font-black tracking-wide hover:text-primary transition-colors antialiased">
                     +91 87788 68739
                   </a>
                 </div>
