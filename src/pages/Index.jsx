@@ -7,12 +7,16 @@ import SectionReveal from "@/components/SectionReveal";
 import BrandCarousel from "@/components/BrandCarousel";
 import { products } from "@/data/products";
 import heroBg from "@/assets/hero-bg.jpg";
-import excavatorImg from "@/assets/excavator.jpg";
-import backhoeImg from "@/assets/backhoe.jpg";
-import dozerImg from "@/assets/dozer.jpg";
-import materialHandlerImg from "@/assets/material-handler.jpg";
-import skidSteerImg from "@/assets/skid-steer.jpg";
-import graderImg from "@/assets/grader.jpg";
+import excavatorImg from "@/assets/category/excavator.jpg";
+import backhoeImg from "@/assets/category/backhoe.jpg";
+import dozerImg from "@/assets/category/dozer.jpg";
+import wheelLoaderImg from "@/assets/category/wheel-loader.jpg";
+import graderImg from "@/assets/category/grader.jpg";
+import rollerImg from "@/assets/category/roller.jpg";
+import skidSteerImg from "@/assets/category/skid-steer.jpg";
+import bucketsImg from "@/assets/category/buckets.jpg";
+import materialHandlerImg from "@/assets/category/material-handler.jpg";
+import othersImg from "@/assets/category/others.jpg";
 import uaeFlag from "@/assets/flags/uae.png";
 
 const stats = [
@@ -26,13 +30,13 @@ const categories = [
   { name: "Excavators", image: excavatorImg },
   { name: "Backhoe Loaders", image: backhoeImg },
   { name: "Dozers", image: dozerImg },
-  { name: "Wheel Loaders", image: materialHandlerImg },
+  { name: "Wheel Loaders", image: wheelLoaderImg },
   { name: "Graders", image: graderImg },
-  { name: "Rollers", image: dozerImg },
+  { name: "Rollers", image: rollerImg },
   { name: "Skid Steer", image: skidSteerImg },
-  { name: "Buckets", image: excavatorImg },
+  { name: "Buckets", image: bucketsImg },
   { name: "Material Handlers", image: materialHandlerImg },
-  { name: "Others", image: skidSteerImg },
+  { name: "Others", image: othersImg },
 ];
 
 const services = [
@@ -388,26 +392,26 @@ const Index = () => {
                     <img
                       src={cat.image}
                       alt={cat.name}
-                      className="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.05] group-hover:brightness-110 group-hover:contrast-[1.05]"
                       loading="lazy"
                     />
                     
-                    {/* Count Badge */}
-                    <div className="absolute top-4 right-4 z-20">
-                      <div className="bg-primary/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-[12px] font-black shadow-lg shadow-primary/30 flex items-center justify-center min-w-[32px]">
-                        {count}
-                      </div>
-                    </div>
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:from-black/90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:from-black/90 z-10" />
                     
-                    <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
                       <h3 className="font-display font-bold text-xl text-white drop-shadow-md transform transition-transform duration-500 group-hover:translate-y-[-4px]">{cat.name}</h3>
                       <div className="flex items-center gap-2 mt-2 overflow-hidden">
                         <div className="h-[2px] w-0 bg-primary group-hover:w-8 transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
                         <span className="text-white/0 group-hover:text-white/90 text-[10px] font-black uppercase tracking-wider transition-all duration-500 translate-x-[-15px] group-hover:translate-x-0">
                           View Products
                         </span>
+                      </div>
+                    </div>
+
+                    {/* Count Badge - Top Right */}
+                    <div className="absolute top-4 right-4 z-30">
+                      <div className="bg-primary/95 backdrop-blur-md text-white px-3 py-1 rounded-full text-[12px] font-black shadow-lg shadow-primary/30 flex items-center justify-center min-w-[32px] border border-white/20">
+                        {count}
                       </div>
                     </div>
                   </Link>
